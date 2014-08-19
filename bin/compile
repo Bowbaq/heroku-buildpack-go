@@ -161,6 +161,14 @@ else
     go get "${FLAGS[@]}" ./...
 fi
 
+if test -e $build/assets
+then
+    echo "-----> Packaging assets with train"
+    go build -o $GOBIN/train github.com/shaoshing/train/cmd
+    PATH=$build/bin:$build/vendor/bundle/ruby/1.9.1/bin:$PATH export PATH
+    $GOBIN/train
+fi
+
 rm -rf $build/.heroku
 
 mkdir -p $build/.profile.d
